@@ -10,7 +10,8 @@
  */
 angular
   .module('facedangularApp', [
-    'ngRoute'
+    'ngRoute',
+    'underscore'
   ])
   .config(function ($routeProvider) {
     $routeProvider
