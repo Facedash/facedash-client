@@ -11,8 +11,7 @@
 angular
     .module('facedangularApp', [
         'ngRoute',
-        'underscore',
-        'highcharts-ng'
+        'underscore'
     ])
     .config(function($routeProvider) {
         $routeProvider

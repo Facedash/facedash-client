@@ -21,7 +21,7 @@
     
     <div class="cols-xs-12 col-sm-4">
         <h3>Location<span class="label label-default pull-right">{{ information.friends.location.precision | number:1 }}% ({{ information.friends.location.count }}/{{ information.friends.location.totalCount }})</span></h3>
-        <highchart config="locationConfig"></highchart>
+        <!-- <highchart config="locationConfig"></highchart> -->
         <div>
             <!-- <span class="fui-location"></span>
             <img src="bower_components/flat-ui/img/icons/svg/compas.svg" alt="Compas" class="tile-image big-illustration"> -->
@@ -56,7 +56,7 @@
 
     <div class="cols-xs-12 col-sm-4">
         <h3>Hometown<span class="label label-default pull-right">{{ information.friends.hometown.precision | number:1 }}% ({{ information.friends.hometown.count }}/{{ information.friends.hometown.totalCount }})</span></h3>
-        <highchart config="hometownConfig"></highchart>
+        <!-- <highchart config="hometownConfig"></highchart> -->
         <div>
             <!-- <span class="fui-location"></span>
             <img src="bower_components/flat-ui/img/icons/svg/compas.svg" alt="Compas" class="tile-image big-illustration"> -->
@@ -87,7 +87,7 @@
 
     <div class="cols-xs-12 col-sm-4">
         <h3>Relationship Status</h3>
-        <highchart config="relationshipStatusConfig"></highchart>
+        <!-- <highchart config="relationshipStatusConfig"></highchart> -->
         <ul>
             <li ng-repeat="(typeName, type) in information.friends.relationshipStatus.type">{{ typeName }}: {{ type.count }}, {{ type.percentage }}</li>
         </ul>
@@ -98,7 +98,7 @@
 
     <div class="cols-xs-12 col-sm-4">
         <h3>Friends gender</h3>
-        <highchart config="genderConfig"></highchart>
+        <!-- <highchart config="genderConfig"></highchart> -->
         <ul>
             <li ng-repeat="(typeName, type) in information.friends.gender.type">{{ typeName }}: {{ type.count }}, {{ type.percentage }}</li>
         </ul>
