@@ -1,27 +1,108 @@
 <div class="row">
-  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">
-    <!-- <h3>Friends</h3> -->
-    <div class="col-xs-12 col-md-12">
-      <h3>User</h3>
-      <p>{{ user }}</p>
-
-      <h3>location</h3>
-      <p>{{ information.friends.location }}</p>
-      
-      <h3>Hometown</h3>
-      <p>{{ information.friends.hometown }}</p>
-
-      <h3>Average Age</h3>
-      <p>{{ information.friends.averageAge }}</p>
-      
-      <h3>relationship Status</h3>
-      <p>{{ information.friends.relationshipStatus }}</p>
-
-      <h3>Friends gender</h3>
-      <p>{{ information.friends.gender }}</p>
-
-<!--       <h3>All</h3>
-      <p>{{ friends }}</p> -->
+    <div class="cols-xs-12 col-sm-4">
+        <!-- <canvas id="doughnut" class="chart chart-doughnut" data="data" labels="labels"></canvas> -->
+        <div class="row">
+            <h3>Friends Count</h3>
+                <div class="big">{{ user.friendsCount }}</div>
+            <p>
+                Timezone: {{ user.timezone }}<br>
+                local: {{ user.locale }}
+            </p>
+        </div>
+        <div class="row">
+            <hr>
+            <h3>Average Age<span class="label label-default pull-right">{{ information.friends.averageAge.precision }}%</span></h3>
+            <p>
+                <div class="big">{{ information.friends.averageAge.avgAge }}</div>
+                Count: {{ information.friends.averageAge.count }}<br>
+            </p>
+        </div>
     </div>
-  </div>
+    
+    <div class="cols-xs-12 col-sm-4">
+        <h3>Location<span class="label label-default pull-right">{{ information.friends.location.precision | number:1 }}% ({{ information.friends.location.count }}/{{ information.friends.location.totalCount }})</span></h3>
+        <highchart config="locationConfig"></highchart>
+        <div>
+            <!-- <span class="fui-location"></span>
+            <img src="bower_components/flat-ui/img/icons/svg/compas.svg" alt="Compas" class="tile-image big-illustration"> -->
+<!--             <ul class="list-group">
+                <li class="list-group-item">
+                    <span class="badge">7</span><span class="badge">4%</span>Percentage
+                </li>
+                <li class="list-group-item">
+                    <span class="badge">7</span><span class="badge">4%</span>Sarcelles, France
+                </li>
+                <li class="list-group-item">
+                    <span class="badge">7</span><span class="badge">4%</span>Sarcelles, France
+                </li>
+            </ul> -->
+
+            <span>{{ information.friends.location.percentage | number:1 }}%</span><br>
+            Percentage
+        </div>
+        <div>
+            <span>{{ information.friends.location.count }}/{{ information.friends.location.totalCount }}</span><br>
+            Count
+        </div>
+        <div>
+            <span>{{ information.friends.location.precision | number:1 }}</span><br>
+            Precision (%)
+        </div>
+    <!-- <p>
+        {{ information.friends.location.totalCount }}<br>
+        Total Count
+    </p> -->
+    </div>
+
+    <div class="cols-xs-12 col-sm-4">
+        <h3>Hometown<span class="label label-default pull-right">{{ information.friends.hometown.precision | number:1 }}% ({{ information.friends.hometown.count }}/{{ information.friends.hometown.totalCount }})</span></h3>
+        <highchart config="hometownConfig"></highchart>
+        <div>
+            <!-- <span class="fui-location"></span>
+            <img src="bower_components/flat-ui/img/icons/svg/compas.svg" alt="Compas" class="tile-image big-illustration"> -->
+            <span>{{ information.friends.hometown.percentage | number:1 }}%</span><br>
+            Percentage
+        </div>
+        <div>
+            <span>{{ information.friends.hometown.count }}/{{ information.friends.hometown.totalCount }}</span><br>
+            Count
+        </div>
+        <div>
+            <span>{{ information.friends.hometown.precision | number:1 }}</span><br>
+            Precision (%)
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="cols-xs-12 col-sm-4">
+        <h3>Average Age</h3>
+        <p>
+            Count: {{ information.friends.averageAge.count }}<br>
+            Average Year: {{ information.friends.averageAge.avgAge }}<br>
+            Precision: {{ information.friends.averageAge.precision }}%
+        </p>
+        <!-- <a class="btn btn-primary btn-large btn-block" href="#">Get Pro</a> -->
+    </div>
+
+    <div class="cols-xs-12 col-sm-4">
+        <h3>Relationship Status</h3>
+        <highchart config="relationshipStatusConfig"></highchart>
+        <ul>
+            <li ng-repeat="(typeName, type) in information.friends.relationshipStatus.type">{{ typeName }}: {{ type.count }}, {{ type.percentage }}</li>
+        </ul>
+
+        <p>Total: {{ information.friends.relationshipStatus.totCount }}</p>
+        <p>Precision: {{ information.friends.relationshipStatus.precision }}</p>
+    </div>
+
+    <div class="cols-xs-12 col-sm-4">
+        <h3>Friends gender</h3>
+        <highchart config="genderConfig"></highchart>
+        <ul>
+            <li ng-repeat="(typeName, type) in information.friends.gender.type">{{ typeName }}: {{ type.count }}, {{ type.percentage }}</li>
+        </ul>
+        <p>Total: {{ information.friends.gender.totCount }}</p>
+        <p>Precision: {{ information.friends.gender.precision }}</p>
+    </div>
 </div>

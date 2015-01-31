@@ -1,7 +1,41 @@
-$icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/bootstrap/";
+// $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/bootstrap/";
 // bower:scss
 @import "bootstrap-sass-official/assets/stylesheets/_bootstrap.scss";
 // endbower
+body {
+  font-family: 'Unica One', cursive;
+  padding-top: 60px;
+  background-color: #2a2a2b;
+  color: rgba(255,255,255,0.5);
+  
+  h1,h2,h3,h4,h5,h6 {
+    font-family: 'Unica One', cursive;
+  }
+
+  .big {
+    font-size: 70px;
+    text-align: center;
+    // color: #ffffff;
+    font-weight: bold;
+  }
+
+}
+
+.list-group-item {
+  background-color: transparent;
+}
+
+svg > rect {
+  fill: transparent;
+}
+
+hr {
+  margin-top: 0;
+  margin-bottom: 0;
+  border: 0;
+  border-top: 1px solid rgba(255,255,255,0.5);
+}
+
 
 /* Space out content a bit */
 
@@ -47,82 +81,3 @@ $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/boots
     }
 }
 */
-
-body{
-  padding-top:60px;
-  font-family: 'Roboto Condensed', sans-serif;
-  background-color: #365f9f;
-  color: rgba(255, 255, 255, 1);
-}
-
-.row{
-    margin-bottom: 20px;
-}
-
-h1,h2,h3,h4,h5,h6, .big{
-  font-family: 'Roboto', sans-serif;
-  font-weight: 100;
-  letter-spacing: -5px;
-}
-
-h3{
-    margin-top: -10px;
-    letter-spacing: 0px;
-}
-
-.text-light{
-    color: #7d95ba;
-}
-
-.dark{
-    background-color: #2e5493;
-    padding: 10px;
-}
-
-.light{
-    background-color: #4167a6;
-    padding: 10px;
-}
-.big{
-  font-size: 90px;
-  text-align: center;
-  color: rgba(255, 255, 255, 1);
-  /*text-shadow: -1px -1px rgba(0, 0, 0, 0.6);*/
-  /*font-weight: bold;*/
-}
-
-.col-md-6{
-  margin-bottom: 40px;
-}
-
-.list-group-item{
-  background-color: #2e5493;
-  border: none;
-}
-
-.list-group, .badge{
-  font-size: 14px;
-}
-
-.label-default{
-  background-color: transparent;
-}
-
-.jumbotron{
-  background-color: transparent;
-  text-align: center;
-}
-
-#foo{
-      position: absolute;
-      height: 0%;
-      width: 0%;
-      top: 50%;
-      left: 50%;
-      /*background-color: #e7e7e7;*/
-    }
-
-    .badge{
-        background-color: transparent;
-        font-weight: lighter;
-    }
