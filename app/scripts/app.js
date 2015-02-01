@@ -13,7 +13,14 @@ angular
         'ngRoute',
         'underscore'
     ])
-    .config(function($routeProvider) {
+    .constant('apiUrl', {
+        'url': 'http://freends-api.azurewebsites.net'
+    })
+    .config(function($routeProvider, $httpProvider) {
+        
+        $httpProvider.defaults.useXDomain = true;
+        delete $httpProvider.defaults.headers.common['X-Requested-With'];
+        
         $routeProvider
             .when('/', {
                 templateUrl: 'views/main.html',
