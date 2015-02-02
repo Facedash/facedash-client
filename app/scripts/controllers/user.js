@@ -1,126 +1,76 @@
-'use strict';
-
-angular.module('facedangularApp')
-    .controller('UserCtrl', [
-        '$scope',
-        'FetchSvc',
-        '_',
-        'UtilsSvc',
-        function($scope, FetchSvc, _, UtilsSvc) {
-            
-            FetchSvc.getUser().success(function(data) {
-                $scope.info = data.atTheEnd.me;
-                $scope.friends = data.atTheEnd.friends;
-                $scope.friends.plucked = _.pluck(data.atTheEnd.friends, 'hometown');
-
-                $scope.user = {
-                    friendsCount: data.atTheEnd.friends.length,
-                    hometown: _.values(data.atTheEnd.me.hometown)[1],
-                    location: _.values(data.atTheEnd.me.location)[1],
-                    timezone: data.atTheEnd.me.timezone,
-                    locale: data.atTheEnd.me.locale,
-                    firstName: data.atTheEnd.me.firstName,
-                    lastName: data.atTheEnd.me.lastName
-                };
-
-                $scope.information = {
-                    friends: {
-                        location: UtilsSvc.compareInfo(data.atTheEnd.friends, 'location', $scope.user),
-                        hometown: UtilsSvc.compareInfo(data.atTheEnd.friends, 'hometown', $scope.user),
-                        averageAge: UtilsSvc.AverageAge(data.atTheEnd.friends, $scope.user),
-                        relationshipStatus: UtilsSvc.breakDownInfo(data.atTheEnd.friends, 'relationship_status', $scope.user),
-                        gender: UtilsSvc.breakDownInfo(data.atTheEnd.friends, 'gender', $scope.user)
-                    }
-                };
-
-                console.log('Relationship status: ', $scope.information.friends.relationshipStatus);
-                console.log('gender: ', $scope.information.friends.gender);
-
+(function() {
+    'use strict';
+    angular.module('facedangularApp')
+        .controller('UserCtrl', [
+            '$scope',
+            'FetchSvc',
+            '_',
+            'UtilsSvc',
+            function($scope, FetchSvc, _, UtilsSvc) {
                 
-                //build a bar chart array
-                var columns = [];
-                _.each($scope.information.friends.relationshipStatus.type, function(item, property){
-                    // console.log('property: ', property);
-                    // console.log('item: ', item);
-                    columns.push([property, item.count]);
-                });
+                FetchSvc.getUser().success(function(data) {
+                    $scope.info = data.atTheEnd.me;
+                    $scope.friends = data.atTheEnd.friends;
+                    $scope.friends.plucked = _.pluck(data.atTheEnd.friends, 'hometown');
 
-                console.log(columns);
+                    $scope.user = {
+                        friendsCount: data.atTheEnd.friends.length,
+                        hometown: _.values(data.atTheEnd.me.hometown)[1],
+                        location: _.values(data.atTheEnd.me.location)[1],
+                        timezone: data.atTheEnd.me.timezone,
+                        locale: data.atTheEnd.me.locale,
+                        firstName: data.atTheEnd.me.firstName,
+                        lastName: data.atTheEnd.me.lastName
+                    };
 
-                var chart = c3.generate({
-                    bindto: '#chart',
-                    data: {
-                        columns: [['data1', 30, 200, 100, 400, 150, 250],['data2', 50, 20, 10, 40, 15, 25]]
-                    }
-                });
-
-                var chart = c3.generate({
-                    bindto: '#location',
-                    data: {
-                        // iris data from R
-                        columns: [
-                            ['Same Location', $scope.information.friends.location.count],
-                            ['Different', $scope.user.friendsCount]
-                        ],
-                        type : 'pie',
-                        colors: {
-                            'Same Location': d3.rgb('#2a2a2b'),
-                            'Different': d3.rgb('#2a2a2b').darker(2)
+                    $scope.information = {
+                        friends: {
+                            location: UtilsSvc.compareInfo(data.atTheEnd.friends, 'location', $scope.user),
+                            hometown: UtilsSvc.compareInfo(data.atTheEnd.friends, 'hometown', $scope.user),
+                            averageAge: UtilsSvc.AverageAge(data.atTheEnd.friends, $scope.user),
+                            relationshipStatus: UtilsSvc.breakDownInfo(data.atTheEnd.friends, 'relationship_status', $scope.user),
+                            gender: UtilsSvc.breakDownInfo(data.atTheEnd.friends, 'gender', $scope.user)
                         }
-                    }
-                });
+                    };
 
-                var chart = c3.generate({
-                    bindto: '#hometown',
-                    data: {
-                        // iris data from R
-                        columns: [
-                            ['Same hometown', $scope.information.friends.hometown.count],
-                            ['Different', $scope.user.friendsCount]
-                        ],
-                        type : 'pie',
-                        colors: {
-                            'Same hometown': d3.rgb('#2a2a2b'),
-                            'Different': d3.rgb('#2a2a2b').darker(2)
-                        }
-                    }
-                });
+                    //build a bar chart array
+                    var buildChartInfo = function(info) {
+                        var array = [];
+                        if(typeof info === 'number') return [['same', info]];
+                        _.each(info, function(item, property){
+                            array.push([property, item.count]);
+                        });
+                        return array;
+                    };
 
-                var chart = c3.generate({
-                    bindto: '#relationship',
-                    data: {
-                        columns: columns,
-                        type: 'bar'
-                    },
-                    bar: {
-                        width: {
-                            ratio: 0.5 // this makes bar width 50% of length between ticks
-                            // or
-                            //width: 100 // this makes bar width 100px
-                        }
-                    }
-                });
+                    var generateGraph = function(htmlId, typeOfGraph, dataArray) {
+                        c3.generate({
+                            bindto: htmlId,
+                            data: {
+                                columns: dataArray,
+                                type: typeOfGraph
+                            },
+                            color: {
+                                pattern: ['#1f77b4', '#aec7e8', '#ff7f0e', '#ffbb78', '#2ca02c', '#98df8a', '#d62728', '#ff9896', '#9467bd', '#c5b0d5', '#8c564b', '#c49c94', '#e377c2', '#f7b6d2', '#7f7f7f', '#c7c7c7', '#bcbd22', '#dbdb8d', '#17becf', '#9edae5']
+                            }
+                        });
+                    };
 
-                var chart = c3.generate({
-                    bindto: '#gender',
-                    data: {
-                        columns: [
-                            ['female', $scope.information.friends.gender.type.female.count],
-                            ['male', $scope.information.friends.gender.type.male.count]
-                        ],
-                        type: 'pie',
-                        colors: {
-                            'female': d3.rgb('#2a2a2b'),
-                            'male': d3.rgb('#2a2a2b').darker(2)
-                        }
-                    },
-                    bar: {
-                        width: {
-                            ratio: 0.5 // this makes bar width 50% of length between ticks
-                            // or
-                            //width: 100 // this makes bar width 100px
-                        }
-                    }
+                    // location
+                    var location = buildChartInfo($scope.information.friends.location.percentage);
+                    generateGraph('#location', 'gauge', location);
+
+                    // Hometown
+                    var hometown = buildChartInfo($scope.information.friends.hometown.percentage);
+                    generateGraph('#hometown', 'gauge', hometown);
+
+                    // Relationship
+                    var relationship = buildChartInfo($scope.information.friends.relationshipStatus.type);
+                    generateGraph('#relationship', 'bar', relationship);
+
+                    // Gender
+                    var gender = buildChartInfo($scope.information.friends.gender.type);
+                    generateGraph('#gender', 'pie', gender);
                 });
-            });
-}]);
+    }]);
+})();

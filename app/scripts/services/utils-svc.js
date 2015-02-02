@@ -1,6 +1,7 @@
 (function() {
+    'use strict';
     angular.module('facedangularApp')
-        .factory('UtilsSvc', [ function() {
+        .factory('UtilsSvc', ['_', function(_) {
             var Utils = {};
 
             Utils.buildSeries = function(Obj) {
@@ -68,10 +69,10 @@
 
                 _.each(infoArray, function(item) {
                     if (obj.type[item]) {
-                        obj.type[item]['count'] ++;
+                        obj.type[item].count ++;
                     } else {
                         obj.type[item] = {};
-                        obj.type[item]['count'] = 1;
+                        obj.type[item].count = 1;
                     }
 
                     totCount++;
@@ -79,7 +80,7 @@
 
                 // Percentage per relationship status
                 _.each(obj.type, function(item) {
-                    item['percentage'] = (item['count'] / totCount) * 100;
+                    item.percentage = (item.count / totCount) * 100;
                 });
 
                 obj.totCount = totCount;
@@ -122,5 +123,5 @@
 
             return Utils;
 
-        }])
+        }]);
 })();
