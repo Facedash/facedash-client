@@ -7,7 +7,7 @@ angular.module('facedangularApp')
       getUser: function(){
         return $http({
           method: 'GET',
-          url: 'http://facedash-api.azurewebsites.net/user'
+          url: 'http://localhost:3000/user'
         })
       }
     }
